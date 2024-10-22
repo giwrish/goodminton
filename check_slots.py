@@ -12,6 +12,23 @@ chat_id = os.getenv('TELEGRAM_CHAT_ID')
 START_TIME = "1915"
 MIN_OCCURRENCES = 3 
 
+HEADERS = {
+    'accept': '*/*',
+    'accept-language': 'en-IN,en-US;q=0.9,en-GB;q=0.8,en;q=0.7,mr;q=0.6',
+    'cookie': '__stripe_mid=320ab3c7-242d-4e13-9315-0adbd7235a1403a9b4; AMP_e67a9a8afa=JTdCJTIyZGV2aWNlSWQlMjIlM0ElMjIzNmFhMDdjNS1lYmMwLTRmYTItOTkyYi1hNTUzYjRiODBhMGElMjIlMkMlMjJzZXNzaW9uSWQlMjIlM0ExNzE2NTAxNTcwNTQzJTJDJTIyb3B0T3V0JTIyJTNBZmFsc2UlMkMlMjJsYXN0RXZlbnRUaW1lJTIyJTNBMTcxNjUwMTY3MzkyNSUyQyUyMmxhc3RFdmVudElkJTIyJTNBMTQlN0Q=; fpg=94; amplitudeDeviceId=undefined; amplitudeSessionId=undefined; __stripe_sid=66fd8e99-c28a-44aa-81fe-8055df120892a4388f',
+    'dnt': '1',
+    'priority': 'u=1, i',
+    'referer': 'https://www.eversports.de/sb/squash-house-berlin-03',
+    'sec-ch-ua': '"Chromium";v="130", "Google Chrome";v="130", "Not?A_Brand";v="99"',
+    'sec-ch-ua-mobile': '?0',
+    'sec-ch-ua-platform': '"macOS"',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-origin',
+    'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36',
+    'x-requested-with': 'XMLHttpRequest'
+}
+
 def get_last_thursday_within_next_14_days():
     today = datetime.today()
     end_date = today + timedelta(days=14)
@@ -25,7 +42,7 @@ def send_alert():
     message = f"Badminton Court available on {start_date} at {START_TIME}!"
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}&text={message}"
     try:
-        response = requests.get(url)
+        response = requests.get(url, headers=HEADERS)
         if response.status_code == 200:
             print("Telegram alert sent successfully")
         else:
@@ -44,7 +61,7 @@ def check_availability(start_date):
         
         count = len(occurrences)
         
-        print(f"Courts available: {3-count}")
+        print(f"Courts Available : {3-count}")
         
         if count < MIN_OCCURRENCES:
             send_alert()
