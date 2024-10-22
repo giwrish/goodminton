@@ -63,8 +63,8 @@ def check_availability(start_date):
         
         print(f"Courts Available : {3-count}")
         
-        if count < MIN_OCCURRENCES:
-            send_alert()
+        # if count < MIN_OCCURRENCES:
+        send_alert()
     
     except RequestException as e:
         print(f"Failed to check slots: {e}")
