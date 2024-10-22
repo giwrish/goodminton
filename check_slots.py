@@ -38,7 +38,7 @@ def get_last_thursday_within_next_14_days():
         if potential_thursday.weekday() == 3:
             return potential_thursday.strftime('%Y-%m-%d')
 
-def send_alert():
+def send_alert(start_date):
     message = f"Badminton Court available on {start_date} at {START_TIME}!"
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage?chat_id={chat_id}&text={message}"
     try:
@@ -64,7 +64,7 @@ def check_availability(start_date):
         print(f"Courts Available : {3-count}")
         
         # if count < MIN_OCCURRENCES:
-        send_alert()
+        send_alert(start_date)
     
     except RequestException as e:
         print(f"Failed to check slots: {e}")
